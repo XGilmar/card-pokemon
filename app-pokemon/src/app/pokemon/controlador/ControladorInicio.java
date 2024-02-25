@@ -4,13 +4,16 @@ import app.pokemon.util.Validaciones;
 import app.pokemon.util.WrapLayout;
 import app.pokemon.vista.PaneInicio;
 import cardSwing.PnCard;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.github.oscar0812.pokeapi.models.pokemon.Pokemon;
 import com.github.oscar0812.pokeapi.models.pokemon.PokemonSpecies;
 import com.github.oscar0812.pokeapi.models.resources.NamedAPIResourceList;
 import com.github.oscar0812.pokeapi.models.utility.FlavorText;
 import com.github.oscar0812.pokeapi.models.utility.NamedAPIResource;
-import glasspanepopup.GlassPanePopup;
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -22,7 +25,7 @@ public class ControladorInicio {
 
     public ControladorInicio(PaneInicio paneInicio) {
         this.paneInicio = paneInicio;
-        GlassPanePopup.install(ControladorDashboard.getInstance());
+        paneInicio.boxItem.addActionListener(new boxCantidadDatos());
     }
 
     public void iniciar() {
@@ -38,8 +41,46 @@ public class ControladorInicio {
         });
     }
 
+    private class boxCantidadDatos implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            seleccionarCantidadDatos();
+            cargarDatosPagina(1);
+        }
+    }
+
+    private int seleccionarCantidadDatos() {
+        int cantidad = 0;
+        removerComponente(paneInicio.lblCheck);
+        pintarComponente(paneInicio.barDatos);
+        paneInicio.barDatos.setMaximum(cantidad);
+
+        switch (paneInicio.boxItem.getSelectedIndex()) {
+            case 0 -> {
+                cantidad = 10;
+                paneInicio.barDatos.setMaximum(cantidad);
+            }
+            case 1 -> {
+                cantidad = 25;
+                paneInicio.barDatos.setMaximum(cantidad);
+            }
+            case 2 -> {
+                cantidad = 50;
+                paneInicio.barDatos.setMaximum(cantidad);
+            }
+            case 3 -> {
+                cantidad = 100;
+                paneInicio.barDatos.setMaximum(cantidad);
+            }
+            default ->
+                throw new AssertionError();
+        }
+        return cantidad;
+    }
+
     private void cargarDatosPagina(int pagina) {
-        int limiteDatos = 20;
+        int limiteDatos = seleccionarCantidadDatos();
         int totalDatos = getTotalPokemonSpecies();
         int totalPagina = (int) Math.ceil((double) totalDatos / limiteDatos);
         listarPokemonSpecies(limiteDatos, pagina);
@@ -48,9 +89,13 @@ public class ControladorInicio {
 
     private void listarPokemonSpecies(int limitDatos, int pagina) {
         paneInicio.pnContenedor.setLayout(new WrapLayout(FlowLayout.LEFT, 8, 8));
+
         SwingWorker<Void, PnCard> worker = new SwingWorker<Void, PnCard>() {
+            int totalCartas = 0;
+
             @Override
             protected Void doInBackground() throws Exception {
+
                 paneInicio.pnContenedor.removeAll();
                 NamedAPIResourceList pokemonSpecies = Pokemon.getList(limitDatos, ((pagina - 1) * limitDatos));
                 for (NamedAPIResource iResource : pokemonSpecies.getResults()) {
@@ -58,7 +103,6 @@ public class ControladorInicio {
                     PokemonSpecies species = pokemon.getSpecies(); // Obtener la especie del Pokémon
                     String descripcion = obtenerDescripcionPokemon(species);
                     PnCard card = new PnCard(pokemon, descripcion);
-
                     publish(card);
                 }
                 return null;
@@ -67,45 +111,32 @@ public class ControladorInicio {
             @Override
             protected void process(List<PnCard> chunks) {
                 for (PnCard card : chunks) {
-
                     SwingUtilities.invokeLater(() -> {
                         paneInicio.pnContenedor.add(card);
-
                     });
+                    ++totalCartas;
                 }
+                paneInicio.barDatos.setValue(totalCartas);
                 paneInicio.pnContenedor.repaint();
                 paneInicio.pnContenedor.revalidate();
+
             }
 
             @Override
             protected void done() {
+                if (totalCartas >= paneInicio.barDatos.getMaximum()) {
+                    removerComponente(paneInicio.barDatos);
+                    pintarComponente(paneInicio.lblCheck);
+                    paneInicio.lblCheck.setIcon(new FlatSVGIcon("app/pokemon/imagen/circle-check.svg", 0.03f));
+                }
                 System.out.println("listo");
             }
         };
 
         worker.execute();
+
     }
 
-    /* private void animateCard(PnCard card) {
-        if (card != null) {
-            int initialY = card.getY();
-            int targetY = 5;
-
-            Animator animator = new Animator(500, new TimingTargetAdapter() {
-                @Override
-                public void timingEvent(float fraction) {
-                    int newY = (int) (initialY + fraction * (targetY - initialY));
-                    // Calcular nueva escala basada en el progreso de la animación
-                    // Calcular nueva escala basada en el progreso de la animación
-
-                    card.setLocation(card.getX(), newY);
-                    card.repaint();
-                }
-            });
-            animator.setResolution(5);
-            animator.start();
-        }
-    }*/
     private int getTotalPokemonSpecies() {
         NamedAPIResourceList pokemonSpeciesList = PokemonSpecies.getList(0, 0);
         return pokemonSpeciesList.getCount();
@@ -114,12 +145,24 @@ public class ControladorInicio {
     private String obtenerDescripcionPokemon(PokemonSpecies species) {
         List<FlavorText> flavorTexts = species.getFlavorTextEntries();
         for (FlavorText flavorText : flavorTexts) {
-            // Filtrar por el idioma deseado (por ejemplo, inglés)
+            // Filtrar por el idioma deseado (por ejemplo, español)
             if (flavorText.getLanguage().getName().equals("es")) {
                 return flavorText.getFlavorText();
             }
         }
         return "Descripción no disponible";
+    }
+
+    private void pintarComponente(Component component) {
+        paneInicio.contendorPaginable.add(component);
+        paneInicio.contendorPaginable.revalidate();
+        paneInicio.contendorPaginable.repaint();
+
+    }
+
+    private void removerComponente(Component component) {
+        paneInicio.contendorPaginable.remove(component);
+
     }
 
 }

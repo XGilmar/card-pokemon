@@ -1,31 +1,14 @@
 package app.pokemon.util;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
-import java.awt.Color;
 import java.awt.Component;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 public class Validaciones {
-
-    public static Icon createIcon(String path, float scale, Color light, Color dark) {
-        FlatSVGIcon icon = new FlatSVGIcon(path, scale);
-        if (light != null) {
-            FlatSVGIcon.ColorFilter colorFilter = new FlatSVGIcon.ColorFilter();
-            if (dark == null) {
-                colorFilter.add(Color.decode("#969696"), light);
-            } else {
-                colorFilter.add(Color.decode("#969696"), light, dark);
-            }
-            icon.setColorFilter(colorFilter);
-        }
-        return icon;
-    }
 
     public static void barraEstiloCategoria(Component component) {
         JScrollPane scroll = (JScrollPane) component.getParent().getParent();

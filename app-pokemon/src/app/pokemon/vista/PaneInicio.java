@@ -16,38 +16,42 @@ public class PaneInicio extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        crazyPanel2 = new raven.crazypanel.CrazyPanel();
-        crazyPanel1 = new raven.crazypanel.CrazyPanel();
+        contendorPaginable = new raven.crazypanel.CrazyPanel();
         pagination1 = new pagination.Pagination();
-        crazyPanel3 = new raven.crazypanel.CrazyPanel();
+        barDatos = new javax.swing.JProgressBar();
+        lblCheck = new javax.swing.JLabel();
+        contenedorCartas = new raven.crazypanel.CrazyPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnContenedor = new javax.swing.JPanel();
+        contenedorControl = new raven.crazypanel.CrazyPanel();
+        boxItem = new javax.swing.JComboBox<>();
 
-        crazyPanel2.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
-            "wrap,fill",
-            "[fill]",
-            "[fill]",
-            null
-        ));
-
-        crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+        contendorPaginable.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "",
             new String[]{
                 "background:lighten(@background,0%)"
             }
         ));
-        crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+        contendorPaginable.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "insets 10 1 10 1",
-            "[grow,center]",
+            "[grow,center]push[]",
             "",
-            null
+            new String[]{
+                "",
+                ""
+            }
         ));
-        crazyPanel1.add(pagination1);
+        contendorPaginable.add(pagination1);
 
-        crazyPanel2.add(crazyPanel1);
+        barDatos.setForeground(new java.awt.Color(34, 197, 94));
+        barDatos.setMaximumSize(new java.awt.Dimension(50, 5));
+        barDatos.setMinimumSize(new java.awt.Dimension(50, 5));
+        barDatos.setPreferredSize(new java.awt.Dimension(50, 5));
+        contendorPaginable.add(barDatos);
+        contendorPaginable.add(lblCheck);
 
-        crazyPanel3.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
-            "wrap,fill,insets 10 1 10 1",
+        contenedorCartas.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "fill,insets 1",
             "[fill]",
             "[fill]",
             null
@@ -66,33 +70,56 @@ public class PaneInicio extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(pnContenedor);
 
-        crazyPanel3.add(jScrollPane1);
+        contenedorCartas.add(jScrollPane1);
+
+        contenedorControl.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+            "",
+            new String[]{
+                "background:lighten(@background,4%);arc:10"
+            }
+        ));
+        contenedorControl.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "insets 2 8 2 8",
+            "",
+            "",
+            null
+        ));
+
+        boxItem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "25", "50", "100" }));
+        boxItem.setFocusable(false);
+        contenedorControl.add(boxItem);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(crazyPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
-                    .addComponent(crazyPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(contendorPaginable, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                    .addComponent(contenedorCartas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(contenedorControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(crazyPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                .addComponent(contenedorControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(crazyPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(contenedorCartas, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(contendorPaginable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private raven.crazypanel.CrazyPanel crazyPanel1;
-    private raven.crazypanel.CrazyPanel crazyPanel2;
-    private raven.crazypanel.CrazyPanel crazyPanel3;
+    public javax.swing.JProgressBar barDatos;
+    public javax.swing.JComboBox<String> boxItem;
+    public raven.crazypanel.CrazyPanel contendorPaginable;
+    private raven.crazypanel.CrazyPanel contenedorCartas;
+    private raven.crazypanel.CrazyPanel contenedorControl;
     private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JLabel lblCheck;
     public pagination.Pagination pagination1;
     public javax.swing.JPanel pnContenedor;
     // End of variables declaration//GEN-END:variables
