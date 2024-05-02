@@ -4,7 +4,7 @@ import app.pokemon.util.Validaciones;
 import app.pokemon.util.WrapLayout;
 import app.pokemon.vista.PaneInicio;
 import cardSwing.PnCard;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.FlatClientProperties;
 import com.github.oscar0812.pokeapi.models.pokemon.Pokemon;
 import com.github.oscar0812.pokeapi.models.pokemon.PokemonSpecies;
 import com.github.oscar0812.pokeapi.models.resources.NamedAPIResourceList;
@@ -30,6 +30,8 @@ public class ControladorInicio {
 
     public void iniciar() {
         Validaciones.barraEstiloCategoria(paneInicio.pnContenedor);
+        paneInicio.pagination1.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,0%);");
+        paneInicio.barDatos.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
         cargarDatosPagina(1);
         pagina();
     }
@@ -52,7 +54,7 @@ public class ControladorInicio {
 
     private int seleccionarCantidadDatos() {
         int cantidad = 0;
-        removerComponente(paneInicio.lblCheck);
+        removerComponente(paneInicio.pagination1);
         pintarComponente(paneInicio.barDatos);
         paneInicio.barDatos.setMaximum(cantidad);
 
@@ -126,10 +128,8 @@ public class ControladorInicio {
             protected void done() {
                 if (totalCartas >= paneInicio.barDatos.getMaximum()) {
                     removerComponente(paneInicio.barDatos);
-                    pintarComponente(paneInicio.lblCheck);
-                    paneInicio.lblCheck.setIcon(new FlatSVGIcon("app/pokemon/imagen/circle-check.svg", 0.03f));
+                    pintarComponente(paneInicio.pagination1);
                 }
-                System.out.println("listo");
             }
         };
 

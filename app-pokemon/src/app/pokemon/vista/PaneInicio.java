@@ -19,7 +19,6 @@ public class PaneInicio extends javax.swing.JPanel {
         contendorPaginable = new raven.crazypanel.CrazyPanel();
         pagination1 = new pagination.Pagination();
         barDatos = new javax.swing.JProgressBar();
-        lblCheck = new javax.swing.JLabel();
         contenedorCartas = new raven.crazypanel.CrazyPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnContenedor = new javax.swing.JPanel();
@@ -28,27 +27,21 @@ public class PaneInicio extends javax.swing.JPanel {
 
         contendorPaginable.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "",
-            new String[]{
-                "background:lighten(@background,0%)"
-            }
+            null
         ));
         contendorPaginable.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
-            "insets 10 1 10 1",
-            "[grow,center]push[]",
+            "wrap,insets 10 1 10 1",
+            "[grow,center]",
             "",
-            new String[]{
-                "",
-                ""
-            }
+            null
         ));
         contendorPaginable.add(pagination1);
 
         barDatos.setForeground(new java.awt.Color(34, 197, 94));
-        barDatos.setMaximumSize(new java.awt.Dimension(50, 5));
-        barDatos.setMinimumSize(new java.awt.Dimension(50, 5));
-        barDatos.setPreferredSize(new java.awt.Dimension(50, 5));
+        barDatos.setMaximumSize(new java.awt.Dimension(100, 4));
+        barDatos.setMinimumSize(new java.awt.Dimension(100, 4));
+        barDatos.setPreferredSize(new java.awt.Dimension(100, 4));
         contendorPaginable.add(barDatos);
-        contendorPaginable.add(lblCheck);
 
         contenedorCartas.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "fill,insets 1",
@@ -106,7 +99,7 @@ public class PaneInicio extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(contenedorControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contenedorCartas, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                .addComponent(contenedorCartas, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(contendorPaginable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -119,7 +112,6 @@ public class PaneInicio extends javax.swing.JPanel {
     private raven.crazypanel.CrazyPanel contenedorCartas;
     private raven.crazypanel.CrazyPanel contenedorControl;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JLabel lblCheck;
     public pagination.Pagination pagination1;
     public javax.swing.JPanel pnContenedor;
     // End of variables declaration//GEN-END:variables
